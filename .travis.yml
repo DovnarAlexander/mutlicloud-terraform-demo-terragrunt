@@ -30,4 +30,4 @@ jobs:
         - echo "Plan"
         - terragrunt plan-all -lock=false 2> >(grep -v "\[terragrunt]" >&2)
     - stage: deploy
-      script: terragrunt apply-all -auto-approve
+      script: echo y | terragrunt apply-all -auto-approve
