@@ -21,12 +21,12 @@ pip install -r requirements.txt
 ### Generate \ update the target environment
 1. New environment creation
 ```bash
-cookiecutter .generator/ .
+cookiecutter .generator/
 ```
 2. Existing environment update
 ```bash
 export ENV=preprod
-cookiecutter .generator/ . -f config-file $ENV/.cookiecutter.yaml
+cookiecutter .generator/ -f config-file $ENV/.cookiecutter.yaml
 ```
 ### Apply core stack (or any other)
 ```bash
