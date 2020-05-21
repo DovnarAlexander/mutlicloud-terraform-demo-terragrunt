@@ -1,4 +1,5 @@
 # Multi-Cloud (AWS, Azure and GCP) IaC with Terraform empowered with Terragrunt
+[![Build Status](https://travis-ci.com/DovnarAlexander/mutlicloud-terraform-demo-terragrunt.svg?token=d6iEYAjgdxMe8Mk4CeRA&branch=master)](https://travis-ci.com/DovnarAlexander/
 ## Diagram
 ![Image](.diagram/multi-cloud_environment.png)
 ## Prerequisites

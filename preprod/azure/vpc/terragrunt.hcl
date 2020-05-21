@@ -1,5 +1,5 @@
 terraform {
-  source = "git::git@github.com:DovnarAlexander/mutlicloud-terraform-demo-vpc.git?ref=v1.0.0"
+  source = "git::git@github.com:DovnarAlexander/mutlicloud-terraform-demo-vpc.git?ref=v1.0.1"
 }
 
 locals {
