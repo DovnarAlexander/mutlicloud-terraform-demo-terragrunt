@@ -1,0 +1,7 @@
+---
+
+environment: 'prod'
+location: 'usa-east'
+vpc_cidr: '10.192.0.0/16'
+subnet_cidr: '10.192.192.0/24'
+instance_size: 'medium'
