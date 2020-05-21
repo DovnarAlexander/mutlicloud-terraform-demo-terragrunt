@@ -17,7 +17,7 @@ before_script:
 stages:
   - test
   - name: deploy
-    if: branch = master
+    if: branch = master AND type != pull_request
 
 jobs:
   include:
@@ -26,8 +26,8 @@ jobs:
         - echo "HCL Format check"
         - 'terragrunt hclfmt --terragrunt-check'
         - echo "Validation"
-        - terragrunt validate-all 2> >(grep -v "\[terragrunt]" >&2)
+        - terragrunt validate-all2> >(grep -v "\[terragrunt]" >&2)
         - echo "Plan"
-        - terragrunt plan-all 2> >(grep -v "\[terragrunt]" >&2)
+        - terragrunt plan-all -lock=false 2> >(grep -v "\[terragrunt]" >&2)
     - stage: deploy
       script: terragrunt apply-all -auto-approve 2> >(grep -v "\[terragrunt]" >&2)
