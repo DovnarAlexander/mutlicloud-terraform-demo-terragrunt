@@ -1,0 +1,20 @@
+---
+# General variables
+name: terraform-multicloud-demo
+domain: dovnar-alexander.xyz
+email: dovnar.alexander@gmail.com
+tags:
+  ManagedBy: Terraform (Terragrunt)
+  Owner: Demo
+# Abstractions examples
+cloud_location:
+  europe:
+    azure: "westeurope"
+    aws: "eu-central-1"
+    gcp: "europe-west3"
+  usa-east:
+    azure: "eastus"
+    aws: 'us-east-1'
+    gcp: 'us-east4'
+# GCP variables
+gcp_project: "mindful-genius-276909"

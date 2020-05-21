@@ -1,0 +1,8 @@
+{
+  "environment": null,
+  "location": ["europe", "usa-east"],
+  "vpc_cidr": null,
+  "subnet_cidr": null,
+  "instance_size": ["small", "medium"],
+  "hcl_file_name": "terragrunt"
+}
