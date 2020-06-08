@@ -2,18 +2,8 @@ terraform {
   source = "git::git@github.com:DovnarAlexander/mutlicloud-terraform-demo-lb.git?ref=v1.0.0"
 }
 
-locals {
-  env_vars  = yamldecode(file(find_in_parent_folders("environment.yaml")))
-  demo_vars = yamldecode(file(find_in_parent_folders("demo.yaml")))
-}
-
-remote_state {
-  backend = "gcs"
-
-  config = {
-    bucket = dependency.core.outputs.state_bucket
-    prefix = format("gcp-%s-lb", local.env_vars.environment)
-  }
+include {
+  path = find_in_parent_folders("demo.hcl")
 }
 
 inputs = {
@@ -26,9 +16,6 @@ inputs = {
   )
 }
 
-dependency "core" {
-  config_path = find_in_parent_folders("core")
-}
 dependency "vpc" {
   config_path = "../gcp/vpc"
   mock_outputs = {
@@ -57,8 +44,4 @@ dependency "gcp" {
     public_ip_address = "8.8.8.8"
   }
   mock_outputs_allowed_terraform_commands = ["init", "validate", "plan", "destroy"]
-}
-
-include {
-  path = find_in_parent_folders()
 }
