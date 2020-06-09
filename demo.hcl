@@ -3,7 +3,7 @@
 locals {
   global_stacks    = ["core", "lb"]
   stack            = basename(path_relative_to_include())
-  cloud_path = basename(dirname(path_relative_to_include()))
+  cloud_path       = basename(dirname(path_relative_to_include()))
   cloud            = contains(local.global_stacks, local.stack) ? "all" : local.cloud_path
   environment      = contains(local.global_stacks, local.stack) ? local.cloud_path : basename(dirname(dirname(path_relative_to_include())))
   environment_vars = yamldecode(file(format("%s/environment.yaml", local.environment)))
@@ -22,6 +22,6 @@ remote_state {
 }
 
 inputs = merge(
-  local.demo_vars, local.environment_vars
+  local.demo_vars, local.environment_vars,
   contains(local.global_stacks, local.stack) ? {} : yamldecode(file(format("%s/%s/cloud.yaml", local.environment, local.cloud)))
 )
