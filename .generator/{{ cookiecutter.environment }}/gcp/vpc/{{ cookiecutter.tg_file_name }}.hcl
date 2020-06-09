@@ -9,3 +9,7 @@ include {
 inputs = {
   resource_group_name = dependency.core.outputs.azure_resource_group_name
 }
+
+dependency "core" {
+  config_path = "../../core"
+}
