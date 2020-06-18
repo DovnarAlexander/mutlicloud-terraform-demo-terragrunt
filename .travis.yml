@@ -16,13 +16,11 @@ before_script:
 
 stages:
   - name: hclfmt
-    if: type != api AND commit_message != "destroy"
   - name: test
-    if: type != api AND commit_message != "destroy"
   - name: apply
-    if: (commit_message == "apply" OR type = api) AND commit_message != "destroy"
+    if: branch = master AND (type = api OR commit_message == "apply")
   - name: destroy
-    if: type != api AND commit_message = "destroy"
+    if: branch = master AND (type = api OR commit_message = "destroy")
 
 jobs:
   include:
@@ -33,6 +31,6 @@ jobs:
         - terragrunt validate-all
         - terragrunt plan-all -lock=false
     - stage: apply
-      script: echo y | terragrunt apply-all
+      script: terragrunt apply-all -auto-approve
     - stage: destroy
-      script: echo y | terragrunt destroy-all
+      script: terragrunt destroy-all -auto-approve

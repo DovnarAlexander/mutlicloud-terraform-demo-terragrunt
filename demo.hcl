@@ -25,3 +25,30 @@ inputs = merge(
   local.demo_vars, local.environment_vars,
   contains(local.global_stacks, local.stack) ? {} : yamldecode(file(format("%s/%s/cloud.yaml", local.environment, local.cloud)))
 )
+
+generate "provider" {
+  path      = "versions_override.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = <<-EOF
+    terraform {
+      backend "gcs" {}
+      required_providers {
+        aws = ">= 2.60.0"
+        azurerm = ">= 2.0"
+        google = ">= 3.21"
+      }
+      required_version = "= 0.12.25"
+      experiments      = [variable_validation]
+    }
+    provider "aws" {
+      region = local.cloud == "aws" ? var.cloud_location[var.location].aws : "us-east-1"
+    }
+    provider "azurerm" {
+      features {}
+    }
+    provider "google" {
+      region  = var.cloud_location[var.location].gcp
+      project = var.gcp_project
+    }
+  EOF
+}

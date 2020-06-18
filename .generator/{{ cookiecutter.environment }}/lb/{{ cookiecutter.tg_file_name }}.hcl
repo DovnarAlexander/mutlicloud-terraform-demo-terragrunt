@@ -1,9 +1,5 @@
 terraform {
-  source = "git::git@github.com:DovnarAlexander/mutlicloud-terraform-demo-lb.git?ref=v1.0.0"
-}
-
-include {
-  path = find_in_parent_folders("demo.hcl")
+  source = "git@github.com:DovnarAlexander/mutlicloud-terraform-demo-lb.git?ref=v1.0-rc1"
 }
 
 inputs = {
@@ -16,6 +12,9 @@ inputs = {
   )
 }
 
+include {
+  path = find_in_parent_folders("demo.hcl")
+}
 dependency "vpc" {
   config_path = "../gcp/vpc"
   mock_outputs = {
@@ -44,4 +43,25 @@ dependency "gcp" {
     public_ip_address = "8.8.8.8"
   }
   mock_outputs_allowed_terraform_commands = ["init", "validate", "plan", "destroy"]
+}
+generate "provider" {
+  path      = "versions_override.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = <<-EOF
+    terraform {
+      backend "gcs" {}
+      required_providers {
+        cloudflare = ">= 2.0"
+        google = ">= 3.21"
+      }
+      required_version = "= 0.12.25"
+    }
+    provider "google" {
+      region  = var.cloud_location[var.location].gcp
+      project = var.gcp_project
+    }
+    provider "cloudflare" {
+      email = var.email
+    }
+  EOF
 }

@@ -1,19 +1,23 @@
 terraform {
-  source = "git::git@github.com:DovnarAlexander/mutlicloud-terraform-demo-application.git?ref=v1.0.2"
+  source = "git@github.com:DovnarAlexander/mutlicloud-terraform-demo-application.git?ref=v1.0-rc1"
+}
+
+inputs = {
+  resource_group_name = dependency.core.outputs.azure_resource_group_name
+  subnet_id           = dependency.vpc.outputs.subnet_id
+  vpc_id              = dependency.vpc.outputs.vpc_id
 }
 
 include {
   path = find_in_parent_folders("demo.hcl")
 }
-
-inputs = {
-  resource_group_name = dependency.core.outputs.azure_resource_group_name
-}
-
 dependency "core" {
   config_path = "../../core"
+  mock_outputs = {
+    azure_resource_group_name = "terraform" // Should exist
+  }
+  mock_outputs_allowed_terraform_commands = ["init", "validate", "plan", "destroy"]
 }
-
 dependency "vpc" {
   config_path = "../vpc"
   mock_outputs = {
