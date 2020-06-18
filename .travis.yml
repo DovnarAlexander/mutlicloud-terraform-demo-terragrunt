@@ -28,7 +28,7 @@ jobs:
       script: terragrunt hclfmt --terragrunt-check
     - stage: test
       script:
-        - terragrunt validate-all
+        - echo y | terragrunt validate-all  # Creates the backed if it does not exist
         - terragrunt plan-all -lock=false
     - stage: apply
       script: terragrunt apply-all -auto-approve
