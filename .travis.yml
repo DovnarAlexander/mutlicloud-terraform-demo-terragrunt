@@ -22,7 +22,7 @@ stages:
   - name: apply
     if: branch = master OR type = api
   - name: destroy
-    if: (branch = master OR type = api) and commit_message = "destroy")
+    if: (branch = master OR type = api) and commit_message = "destroy"
 
 jobs:
   include:
