@@ -1,0 +1,7 @@
+---
+
+environment: 'preprod'
+location: 'europe'
+vpc_cidr: '10.10.0.0/16'
+subnet_cidr: '10.10.20.0/24'
+instance_size: 'small'
