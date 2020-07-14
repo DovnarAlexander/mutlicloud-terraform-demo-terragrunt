@@ -13,6 +13,8 @@ before_script:
   - 'chmod +x .data/prepare.sh'
   - '.data/prepare.sh'
   - 'echo $GOOGLE_CREDENTIALS_FILE | base64 -d > $GOOGLE_CREDENTIALS'
+  - 'eval `ssh-agent`'
+  - 'echo $SSH_KEY | base64 -d | ssh-add -'
 
 stages:
   - name: hclfmt
