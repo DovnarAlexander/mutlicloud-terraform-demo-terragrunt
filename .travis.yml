@@ -22,7 +22,7 @@ stages:
   - name: test
     if: branch != master
   - name: apply
-    if: branch = master OR type = api
+    if: (branch = master and type != pull_request) OR type = api
   - name: destroy
     if: (branch = master OR type = api) and commit_message = "destroy"
 
