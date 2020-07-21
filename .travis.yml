@@ -1,0 +1,40 @@
+---
+
+language: go
+dist: bionic
+addons:
+  apt:
+    packages:
+      - git
+      - wget
+      - unzip
+
+before_script:
+  - 'chmod +x .data/prepare.sh'
+  - '.data/prepare.sh'
+  - 'echo $GOOGLE_CREDENTIALS_FILE | base64 -d > $GOOGLE_CREDENTIALS'
+  - 'eval `ssh-agent`'
+  - 'echo $SSH_KEY | base64 -d | ssh-add -'
+
+stages:
+  - name: hclfmt
+    if: branch != master
+  - name: test
+    if: branch != master
+  - name: apply
+    if: (branch = master and type != pull_request) OR type = api
+  - name: destroy
+    if: (branch = master OR type = api) and commit_message = "destroy"
+
+jobs:
+  include:
+    - stage: hclfmt
+      script: terragrunt hclfmt --terragrunt-check
+    - stage: test
+      script:
+        - echo y | terragrunt validate-all  # Creates the backed if it does not exist
+        - terragrunt plan-all -lock=false
+    - stage: apply
+      script: echo y | terragrunt apply-all
+    - stage: destroy
+      script: echo y | terragrunt destroy-all

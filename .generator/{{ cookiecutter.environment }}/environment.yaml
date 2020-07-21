@@ -1,0 +1,7 @@
+---
+
+environment: '{{ cookiecutter.environment }}'
+location: '{{ cookiecutter.location }}'
+vpc_cidr: '{{ cookiecutter.vpc_cidr }}'
+subnet_cidr: '{{ cookiecutter.subnet_cidr }}'
+instance_size: '{{ cookiecutter.instance_size }}'

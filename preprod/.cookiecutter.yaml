@@ -1,0 +1,8 @@
+---
+
+default_context:
+  environment: 'preprod'
+  location: 'europe'
+  vpc_cidr: '10.199.0.0/16'
+  subnet_cidr: '10.199.100.0/24'
+  instance_size: 'medium'
