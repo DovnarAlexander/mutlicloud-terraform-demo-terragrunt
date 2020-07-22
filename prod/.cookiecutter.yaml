@@ -1,0 +1,8 @@
+---
+
+default_context:
+  environment: 'prod'
+  location: 'usa-east'
+  vpc_cidr: '10.100.0.0/16'
+  subnet_cidr: '10.100.10.0/24'
+  instance_size: 'medium'
